@@ -1,5 +1,6 @@
 #-*- coding: utf-8 -*-
 import os
+from collections import defaultdict
 
 from reverse_index import reverse_index
 from serialization import deserialization_of_article
@@ -14,6 +15,15 @@ def set_of_documents():
 
     return documents
 
+
+def ranging(index, request):
+    freq = defaultdict(list)
+
+    for word in request.lower().split():
+        for id in index[word]:
+            freq[id].append(word)
+    
+    return sorted(freq.items(), key=lambda v: len(v[1]), reverse=True)
 
 
 if __name__ == '__main__':
@@ -30,4 +40,15 @@ if __name__ == '__main__':
 
     request = str(input('Input your search request: '))
     documents = set_of_documents()
-    print (reverse_index([i.get('text') for i in documents]))
+    index = reverse_index([i.get('text') for i in documents]) 
+
+    print ('')
+    print ('')
+    print ('Request:  %s' % request)
+    print ('')
+    for id, keywords in ranging(index, request)[:10]:
+        print ('Keywords: %s' % ', '.join(keywords))
+        print ('Title: %s' % documents[id].get('title'))
+        print ('URL:  %s' % documents[id].get('url'))
+        print ('-' * 80)
+        print ('')

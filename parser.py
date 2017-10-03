@@ -35,9 +35,10 @@ class Parser:
         article = {}
         article['url'] = link
         article['title'] = content.find('div', attrs={'class': 'clauses-name-id'}).text
-        article['author'] = content.find('div', attrs={'class': 'clauses_anons'}).find('p').text
         article['date'] = content.find('div', attrs={'class': 'number_current_id'}).text
         article['text'] = content.find('div', attrs={'class': 'clauses_text'}).text
+        author_block = content.find('div', attrs={'class': 'clauses_anons'})#.find('p').text
+        article['author'] = author_block.find('p').text if author_block else 'None'
     
         return article
 

@@ -1,9 +1,11 @@
 #-*- coding: utf-8 -*-
 import os
-import uuid
 import shutil
-from bs4 import BeautifulSoup
 from urllib.request import urlopen
+
+from bs4 import BeautifulSoup
+
+from serialization import serialization_of_article
 
 
 class Parser:
@@ -40,22 +42,9 @@ class Parser:
         return article
 
 
-def serialization_of_articles(articles):
-    if os.path.exists('./articles'):
-        shutil.rmtree('./articles')
-    os.mkdir('./articles')
-
-    for article in articles:
-        fname = '%s.txt' % uuid.uuid4()
-
-        content = "@author {author}\n@title {title}\n@date {date}\n@url {url}\n\n{text}".format(**article)
-        with open('./articles/%s' % fname, 'a') as file:
-            file.write(content)
-
-
 
 if __name__ == '__main__':
-    limit = 1
+    limit = 50
     base_url = 'http://www.vecherniyorenburg.ru/year2016/'
 
     articles = []
@@ -70,4 +59,9 @@ if __name__ == '__main__':
             print (article)
             articles.append(Parser.get_article(article))
 
-    serialization_of_articles(articles)
+    if os.path.exists('./articles'):
+        shutil.rmtree('./articles')
+    os.mkdir('./articles')
+
+    for article in articles:
+        serialization_of_article(article)

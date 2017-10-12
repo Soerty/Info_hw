@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hoodini - Search Engine</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #F0EEEE;
+        }
+
+        .center {
+            margin: auto;
+            padding-top: 20%;
+            text-align: center;
+        }
+
+        .title {
+            font-style: italic;
+        }
+
+        #search_form {
+            padding: 10px;
+            background: #C9C9C9;
+            display: inline-block;
+            box-shadow: 0 2px 3px rgba(0, 0, 0, .2);
+        }
+
+        input {
+            width: 300px;
+            height: 30px;
+            background: white;
+            border: none;
+            color: black;
+            font-style: italic;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        button {
+            width: 100px;
+            height: 30px;
+            border: none;
+            background: #3D3D3D;
+        }
+
+        button:hover {
+            background: #EFA82D;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="center">
+        <h1 class="title">Hoodini</h1>
+        <form id="search_form" action="/search" method="POST">
+            <input type="search" name="query">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+</body>
+</html>

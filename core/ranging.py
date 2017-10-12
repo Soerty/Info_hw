@@ -2,15 +2,14 @@
 import os
 from collections import defaultdict
 
-from reverse_index import reverse_index
-from serialization import deserialization_of_article
+from .serialization import deserialization_of_article
 
 
 def set_of_documents():
     documents = []
 
-    for fname in os.listdir('./articles'):
-        document = open(os.path.join('./articles', fname)).read()
+    for fname in os.listdir('core/articles'):
+        document = open(os.path.join('core/articles', fname)).read()
         documents.append(deserialization_of_article(document))
 
     return documents
@@ -26,6 +25,7 @@ def ranging(index, request):
     return sorted(freq.items(), key=lambda v: len(v[1]), reverse=True)
 
 
+"""
 if __name__ == '__main__':
     if not os.path.exists('./articles'):
         print ('There is no collection of documents, please, first run:')
@@ -52,3 +52,4 @@ if __name__ == '__main__':
         print ('URL:  %s' % documents[id].get('url'))
         print ('-' * 80)
         print ('')
+"""

@@ -12,19 +12,28 @@ server = Flask(__name__)
 documents = set_of_documents()
 index = reverse_index([i.get('text') for i in documents])
 
+@server.template_filter('shorten')
+def shorten(string):
+    return string if len(string) < 60 else string[:60] + '...'
+
+server.jinja_env.filters['shorten'] = shorten
+
+
 
 @server.route('/', methods=['GET'])
 def main():
     return render_template('index.html')
 
 
-@server.route('/search', methods=['POST'])
+@server.route('/search', methods=['GET', 'POST'])
 def search():
     query = request.form['query']
-    result = ''
-    for id, keywords in ranging(index, query)[:10]:
-        result += '%s</br>%s</br><hr>' % (documents[id].get('title'), documents[id].get('url'))
-    return 'Results: \'%s\'' % result
+
+    results = []
+    for id, keywords in ranging(index, query):
+        results.append((documents[id].get('title'), documents[id].get('url')))
+
+    return render_template('search.html', search_query=query, searching_results=results)
 
 
 

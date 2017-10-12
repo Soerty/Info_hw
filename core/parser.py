@@ -45,7 +45,7 @@ class Parser:
 
 
 if __name__ == '__main__':
-    limit = 50
+    limit = 1000
     base_url = 'http://www.vecherniyorenburg.ru/year2016/'
 
     articles = []

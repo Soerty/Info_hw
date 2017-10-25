@@ -8,24 +8,24 @@ from core.reverse_index import reverse_index
 from core.ranging import set_of_documents
 from core.ranging import ranging
 
-server = Flask(__name__)
+app = Flask(__name__)
 documents = set_of_documents()
 index = reverse_index([i.get('text') for i in documents])
 
-@server.template_filter('shorten')
+@app.template_filter('shorten')
 def shorten(string):
     return string if len(string) < 60 else string[:60] + '...'
 
-server.jinja_env.filters['shorten'] = shorten
+app.jinja_env.filters['shorten'] = shorten
 
 
 
-@server.route('/', methods=['GET'])
+@app.route('/', methods=['GET'])
 def main():
     return render_template('index.html')
 
 
-@server.route('/search', methods=['GET', 'POST'])
+@app.route('/search', methods=['GET', 'POST'])
 def search():
     query = request.form['query']
 
@@ -38,4 +38,4 @@ def search():
 
 
 if __name__ == '__main__':
-    server.run()
+    app.run()
